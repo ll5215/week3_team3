@@ -86,18 +86,43 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	ListNode *targetNode;
+	//검색 노드 및 임시노드 선언
+	ListNode *targetNode,*previousNode;
 
+	//리스트가 없으면 리턴
 	if(ll == NULL)
 		return;
-
+	
+	//헤더 포인터부터 시작
 	targetNode = ll->head;
+	previousNode = NULL;
 
-	if(targetNode == NULL)
+	//헤더포인터가 없다면(리스트가 비어있다면) 리턴
+	if(targetNode == NULL )
 		return;
 
-	while(targetNode != NULL){
-		
+	//두 노드를 비교해야되서 둘 다 NULL이 아닌지 체크
+	while(targetNode != NULL && targetNode->next != NULL){
+		//타겟 노드의 값이 홀수고, 다음 노드의 값이 짝수라면 위치를 바꾼다
+		if(targetNode->item %2 != 0 && targetNode->next->item %2 ==0){
+			if(previousNode != NULL){
+				previousNode->next = targetNode->next;
+				targetNode->next = targetNode->next->next;
+				previousNode->next->next = targetNode;
+			}
+			//시작부터 조건에 부합할경우
+			else{
+				ll->head = targetNode->next;
+				targetNode->next = targetNode->next->next;
+				ll->head->next = targetNode;
+			}
+			//위치를 바꿨으면 처음부터 다시 검색
+			targetNode = ll->head;
+			previousNode = NULL;
+			continue;
+		}
+		previousNode = targetNode;
+		targetNode = targetNode->next;
 	}
 }
 

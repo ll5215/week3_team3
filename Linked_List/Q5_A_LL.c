@@ -102,7 +102,67 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	//나눠야될 부분인 sliceIndex,검색하면서 위치를 찾는 indexCount
+	int sliceIndex,indexCount = 0;
+	//삽입해야할 노드인 targetNode,각각의 검색 직전 노드인 prevFront,prevBack
+	ListNode *targetNode,*previousFrontNode,*previousBackNode;
+	
+	if(ll == NULL)
+		return;
+
+	//targetNode를 포인터헤더로,각각의 prevNode들은 NULL로 초기화
+	targetNode = ll->head;
+	previousFrontNode = NULL;
+	previousBackNode = NULL;
+
+	//sliceIndex가 홀수면 +1,아니면 그냥 반으로 나눈다
+	//나중에 보니 sliceIndex = li->size/2 + li->size%2로 해도됨
+	if(ll->size %2 ==1)
+		sliceIndex = ll->size / 2 + 1;
+	else
+		sliceIndex = ll->size / 2;
+
+	//targetNode가 끝까지 갔을때 종료
+	while(targetNode != NULL){
+		//sliceIndex보다 작으면(기준보다 작다면,기준보다 왼쪽이라면)prevFront에 저장
+		if(indexCount < sliceIndex){
+			if(previousFrontNode == NULL){
+				resultFrontList->head = targetNode;
+			}
+			else{
+				previousFrontNode->next = targetNode;
+			}
+			//직전 노드에 타겟노드를 설정한다
+			previousFrontNode = targetNode;
+			//frontList의 크기를 늘려야한다
+			//안그러면 나중에 검색,삽입,참조할때 size 참조하는데 귀찮아짐
+			++(resultFrontList->size);
+		}
+		else{
+			if(previousBackNode == NULL){
+				resultBackList->head = targetNode;
+			}
+			else{
+				previousBackNode->next = targetNode;
+			}
+			previousBackNode = targetNode;
+			++(resultBackList->size);
+		}
+		//타겟노드를 다음 타겟노드로 이동시킨다
+		targetNode = targetNode->next;
+		++indexCount;
+	}
+
+	//타겟노드를 의도하던 위치로 이동시킨 다음에는 기존에 있던 다음노드의 연결상태를 끊어야한다
+	//안그러면 2,3,5,6,7일시 연결 그대로 유지되서 2,3,5,6,7과 6,7,로 남음 
+	if (previousFrontNode != NULL) {
+        previousFrontNode->next = NULL;
+    }
+
+	//원본 ll을 분할하면서 각각의 nodeList가 원본을 참조하는데,
+	//원본을 해제해두지않으면 나중에 각각 메모리해제할때 이중메모리해제가 발생할수 있음
+	ll->head = NULL;
+	ll->size = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
