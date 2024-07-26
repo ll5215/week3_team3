@@ -87,7 +87,23 @@ int main()
 
 void RecursiveReverse(ListNode **ptrHead)
 {
-	/* add your code here */
+	//헤더포인터 자체가 없거나 헤더포인터가 다음을 가리키는게 없을경우(끝일경우) 리턴
+	if((*ptrHead)->next == NULL || *ptrHead == NULL)
+		return;
+
+	//헤더포인터 및 다음 노드 포인터 임시저장
+	ListNode *firstPtr = *ptrHead;
+	ListNode *nextPtr = (*ptrHead)->next;
+	
+	//다음 노드 포인터로 전달
+	RecursiveReverse(&nextPtr);
+	//헤더포인터가 가리키는 첫번째 노드의 다음 노드를 헤더포인터였던 노드로한다(순번을 뒤로 미룬다)
+	firstPtr->next->next = firstPtr;
+	//뒤로 미룬 포인터의 연결을 없앤다
+	firstPtr->next = NULL;
+
+	//바꾼 헤더포인터를 바꾼 헤더포인터 이외의 노드들과 연결
+	*ptrHead = nextPtr;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
