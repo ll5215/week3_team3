@@ -86,7 +86,19 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	ListNode *targetNode;
+
+	if(ll == NULL)
+		return;
+
+	targetNode = ll->head;
+
+	if(targetNode == NULL)
+		return;
+
+	while(targetNode != NULL){
+		
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
