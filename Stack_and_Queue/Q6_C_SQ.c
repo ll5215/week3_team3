@@ -111,7 +111,23 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+	if(s == NULL || s->ll.head == NULL)
+		return;
+
+	ListNode *targetNode = s->ll.head;
+	while(targetNode != NULL){
+		ListNode *nextNode = targetNode->next;
+		if(targetNode->item == value)
+			return;
+
+		pop(s);
+
+		if(nextNode != NULL)
+			targetNode = nextNode;
+		else
+			targetNode = NULL;
+	}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////

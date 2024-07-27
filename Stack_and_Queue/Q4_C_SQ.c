@@ -112,7 +112,34 @@ int main()
 
 void reverse(Queue *q)
 {
-/* add your code here */
+	if(q == NULL || q->ll.head == NULL)
+		return;
+
+	Stack s;
+
+	s.ll.head = NULL;
+	s.ll.size = NULL;
+	s.ll.tail = NULL;
+
+	ListNode *targetNode = q->ll.head;
+
+	while(targetNode != NULL){
+		push(&s,targetNode->item);
+
+		targetNode = targetNode->next;
+	}
+
+	removeAllItems(&(q->ll));
+	ListNode *stackCarrier = s.ll.head;
+	
+
+	while (stackCarrier != NULL)
+	{
+		enqueue(q,stackCarrier->item);
+
+		stackCarrier = stackCarrier->next;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
