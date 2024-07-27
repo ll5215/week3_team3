@@ -52,3 +52,18 @@ Mkfile.old
 dkms.conf
 
 .vscode/
+
+# Ignore all executables with no extension
+# Ignore all files with no extension in the current directory
+# Ignore specific file patterns in subdirectories
+/*
+
+# Ignore all executables with no extension
+*.[oO]        # Ignore all object files
+*.out         # Ignore all .out files
+*.exe         # Ignore all .exe files
+*.out         # Ignore all .out files
+*.app         # Ignore all .app files
+*.i86         # Ignore all .i86 files
+*.x86_64      # Ignore all .x86_64 files
+*.hex         # Ignore all .hex files

@@ -98,7 +98,6 @@ int insertSortedLL(LinkedList *ll, int item)
 	//ll의 헤드포인터가 비어있을경우(=처음 숫자를 넣는경우) 헤드에 삽입하고 0값(시작값) 리턴
 	if(ll->head == NULL){
 		ll->head = malloc(sizeof(ListNode));
-		ll->head->item = NULL;
 		ll->head->item = item;
 		++(ll->size);
 
@@ -136,11 +135,6 @@ int insertSortedLL(LinkedList *ll, int item)
 		//못찾으면 이번 노드는 previousNode에,삽입할 노드는 이번노드의 다음 노드로 변경
 		previousNode = targetNode;
 		targetNode = targetNode->next;
-
-		//연결리스트 사이즈를 1올린다
-		//index값을 1 올린다
-		++(ll->size);
-		++index;
 	}
 
 	//삽입할 노드를 끝까지 검색해도 못찾는다면(모든 저장된 수가 item보다 값이 작으면)
